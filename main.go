@@ -1,13 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"time"
 )
 
 var (
-	limit = 100000000
-
+	limit  int
 	primes []bool
 )
 
@@ -48,6 +48,10 @@ func seive(lower, upper int) []bool {
 }
 
 func main() {
+	flag.IntVar(&limit, "limit", 100000000, "maximum calculation limit (default 100000000)")
+	print := flag.Bool("print", false, "print prime values after calculation")
+	flag.Parse()
+
 	fmt.Println("limit:      ", limit)
 
 	start := time.Now()
@@ -69,4 +73,9 @@ func main() {
 
 	fmt.Println("prime count:", len(indices))
 	fmt.Println("time:       ", duration)
+
+	if *print {
+		fmt.Println("primes:")
+		fmt.Println(indices)
+	}
 }
